@@ -1,0 +1,146 @@
+{
+  "welcome": {
+    "speaker": "Chair",
+    "role": "Opening the session",
+    "voice": "Microsoft Hazel Desktop",
+    "text": "Distinguished delegates, the meeting is called to order. Today we consider equitable access to vaccines. We will hear national positions, consult on the draft, and seek consensus."
+  },
+  "evidence": {
+    "speaker": "Secretariat",
+    "role": "Technical briefing",
+    "voice": "Microsoft Zira Desktop",
+    "text": "The shared pool contains one hundred million courses. Kitala has the greatest immediate need. Pelagia faces delivery constraints. The task is to agree on allocation, financing, and accountability."
+  },
+  "nordland": {
+    "speaker": "Nordland",
+    "role": "Opening statement",
+    "voice": "Microsoft George",
+    "text": "Thank you, Chair. We support a shared response. However, our parliament requires public reporting on donor funds. We can support financing only if the agreement includes clear accountability."
+  },
+  "meridia": {
+    "speaker": "Meridia",
+    "role": "Opening statement",
+    "voice": "Microsoft Susan",
+    "text": "Thank you, Chair. Reliable supply requires reliable commitments. We ask for a production purchase guarantee and an allocation that we can explain to our own population."
+  },
+  "recognize": {
+    "speaker": "Chair",
+    "role": "Recognition of the speaker",
+    "voice": "Microsoft Hazel Desktop",
+    "text": "I now give the floor to the distinguished delegate of Kitala. Please present your proposal."
+  },
+  "statement_equity": {
+    "speaker": "Kitala",
+    "role": "Your selected intervention",
+    "voice": "Microsoft Zira Desktop",
+    "text": "Thank you, Chair. We propose thirty five percent of the pool for Kitala, supported by donor financing and delivery assistance. We are ready to discuss reporting and production commitments to reach agreement."
+  },
+  "statement_national": {
+    "speaker": "Kitala",
+    "role": "Your selected intervention",
+    "voice": "Microsoft Zira Desktop",
+    "text": "Thank you, Chair. Our needs are urgent. We request fifty percent of the shared pool for Kitala. We ask other delegations to accept this allocation without additional conditions."
+  },
+  "consult": {
+    "speaker": "Nordland",
+    "role": "Informal consultation",
+    "voice": "Microsoft George",
+    "text": "Let us look for a package we can both support. We could provide thirty five million credits if quarterly public reporting is included. Ten million should support delivery in Pelagia. Can you accept that wording?"
+  },
+  "agree": {
+    "speaker": "Nordland",
+    "role": "Response to your amendment",
+    "voice": "Microsoft George",
+    "text": "That addresses our concern. We can support the financing clause on that basis. You will still need to resolve Meridia's production requirement and the allocation across all delegations."
+  },
+  "reject": {
+    "speaker": "Nordland",
+    "role": "Response to your amendment",
+    "voice": "Microsoft George",
+    "text": "Without public reporting, I cannot commit these funds. Our objection remains. Please revise the accountability clause if you want us to support the package."
+  },
+  "shock": {
+    "speaker": "Secretariat",
+    "role": "New information",
+    "voice": "Microsoft Zira Desktop",
+    "text": "Chair, we have a supply update. A manufacturing disruption has reduced the pool to eighty million courses. Every allocation now delivers fewer courses. Meridia has also revised its minimum allocation to thirty percent."
+  },
+  "consensus": {
+    "speaker": "Chair",
+    "role": "Formal consideration",
+    "voice": "Microsoft Hazel Desktop",
+    "text": "We have before us the revised draft. I invite delegations to indicate whether they object to its adoption. This teaching exercise proceeds by consensus."
+  },
+  "adopted": {
+    "speaker": "Chair",
+    "role": "Outcome",
+    "voice": "Microsoft Hazel Desktop",
+    "text": "I see no objection. The text is adopted. The final policy agreement records our shared commitments on allocation, financing, delivery support, accountability, and production. Delegates, please review and download the agreement report. This session is now closed."
+  },
+  "failed": {
+    "speaker": "Chair",
+    "role": "Outcome",
+    "voice": "Microsoft Hazel Desktop",
+    "text": "An objection remains. Consensus has not been reached. I invite delegations to return to consultations. Consider what a revised package would need to address."
+  },
+  "recognize_k": {
+    "speaker": "Chair",
+    "role": "Recognition of the speaker",
+    "voice": "Microsoft Hazel Desktop",
+    "text": "I now give the floor to the distinguished delegate of Kitala. Please present your position."
+  },
+  "recognize_n": {
+    "speaker": "Chair",
+    "role": "Recognition of the speaker",
+    "voice": "Microsoft Hazel Desktop",
+    "text": "I now give the floor to the distinguished delegate of Nordland. Please present your position."
+  },
+  "recognize_m": {
+    "speaker": "Chair",
+    "role": "Recognition of the speaker",
+    "voice": "Microsoft Hazel Desktop",
+    "text": "I now give the floor to the distinguished delegate of Meridia. Please present your position."
+  },
+  "recognize_p": {
+    "speaker": "Chair",
+    "role": "Recognition of the speaker",
+    "voice": "Microsoft Hazel Desktop",
+    "text": "I now give the floor to the distinguished delegate of Pelagia. Please present your position."
+  },
+  "role_n_report": {
+    "speaker": "Nordland",
+    "role": "Your selected intervention",
+    "voice": "Microsoft George",
+    "text": "Thank you, Chair. We require quarterly public reporting. We can discuss thirty five million credits of financing within that accountable framework."
+  },
+  "role_n_discuss": {
+    "speaker": "Nordland",
+    "role": "Your selected intervention",
+    "voice": "Microsoft George",
+    "text": "Thank you, Chair. We invite discussion on accountability. Our mandate still requires public reporting before we can support a final agreement."
+  },
+  "role_m_guarantee": {
+    "speaker": "Meridia",
+    "role": "Your selected intervention",
+    "voice": "Microsoft Susan",
+    "text": "Thank you, Chair. We require a production purchase guarantee and an allocation within our mandate. This certainty will help us support the collective package."
+  },
+  "role_m_unresolved": {
+    "speaker": "Meridia",
+    "role": "Your selected intervention",
+    "voice": "Microsoft Susan",
+    "text": "Thank you, Chair. The guarantee remains unresolved in the working text. We will need to return to it before adoption."
+  },
+  "role_p_delivery": {
+    "speaker": "Pelagia",
+    "role": "Your selected intervention",
+    "voice": "Microsoft Zira Desktop",
+    "text": "Thank you, Chair. We request ten million credits for delivery support. International access must include the means to reach remote communities."
+  },
+  "role_p_unresolved": {
+    "speaker": "Pelagia",
+    "role": "Your selected intervention",
+    "voice": "Microsoft Zira Desktop",
+    "text": "Thank you, Chair. Delivery support remains unresolved. We must return to this funding gap before a final agreement can meet our mandate."
+  }
+}
