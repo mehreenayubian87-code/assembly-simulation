@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#112c35"><meta name="description" content="Take your seat in a voiced, interactive 3D health assembly. A WHO-inspired classroom prototype."><title>Assembly · Inside the chamber</title><link rel="stylesheet" href="chamber.css?v=0.5"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' rx='16' fill='%23182f38'/%3E%3Cpath d='M14 43 30 14 46 43M22 32h16' stroke='%23d9c48e' fill='none' stroke-width='3'/%3E%3C/svg%3E"></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#112c35"><meta name="description" content="Take your seat in a voiced, interactive 3D health assembly. A WHO-inspired classroom prototype."><title>Assembly · Inside the chamber</title><link rel="stylesheet" href="chamber.css?v=0.6"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' rx='16' fill='%23182f38'/%3E%3Cpath d='M14 43 30 14 46 43M22 32h16' stroke='%23d9c48e' fill='none' stroke-width='3'/%3E%3C/svg%3E"></head>
 <body>
 <canvas id="world" aria-label="Interactive three-dimensional assembly chamber. Use the view controls to change viewpoint." tabindex="0"></canvas><div class="vignette"></div>
 <div id="webglFallback" hidden><h2>The 3D chamber could not load.</h2><p>You can still follow the captions, play the audio, and complete the negotiation with the controls.</p><p>The same negotiation and final PDF report remain available below.</p></div>
@@ -12,4 +12,5 @@
 <dialog id="dialog"><button class="close" aria-label="Close dialog" onclick="Chamber.closeDialog()">×</button><div id="dialogBody"></div></dialog><div id="notice" role="status"></div>
 <script src="vendor/babylon.js"></script><script src="model.js?v=0.4"></script><script src="roles.js?v=0.4"></script><script src="scene.js?v=0.4"></script><script src="agreement.js?v=0.4"></script><script src="chamber.js?v=0.4"></script>
 </body></html>
+
 
