@@ -37,3 +37,7 @@ Check that the query inserted one row (or that the existing role is correct), th
 ## Verification
 
 `npm test` exercises PostgreSQL row-level access using PGlite and checks custom proposals and PDF reports. `npm run build:auth` bundles the pinned Supabase client. Full deployment acceptance additionally requires real professor email sign-in, professor assignment, class creation, student joining and a submitted report visible only to its owner and class professor.
+
+## Classroom management update
+
+After the base schema, run supabase/classroom-management.sql to enable reopening and deletion. Only the classroom owner can perform these actions. Reopening retains the existing code. Deletion removes the classroom and memberships, while reports remain private to their student owners; the professor loses access. The interface requires a separate explicit confirmation before deletion. Create class creates a new classroom with a new code.

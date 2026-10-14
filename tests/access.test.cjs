@@ -11,6 +11,7 @@ test('database isolates student work and restricts professor privileges',async()
  create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
  grant usage on schema auth to authenticated,anon; grant execute on function auth.uid() to authenticated,anon;`);
  await db.exec(fs.readFileSync('supabase/schema.sql','utf8'));
+ await db.exec(fs.readFileSync('supabase/classroom-management.sql','utf8'));
  for(const id of ids)await db.query('insert into auth.users values ($1)',[id]);
  await db.query("insert into assembly_roles values ($1,'professor'),($2,'professor')",[ids[2],ids[3]]);
  async function as(id,role='authenticated'){await db.exec('reset role');await db.query("select set_config('request.jwt.claim.sub',$1,false)",[id]);await db.exec('set role '+role)}
@@ -31,6 +32,17 @@ test('database isolates student work and restricts professor privileges',async()
  await db.query('select assembly_close_class($1)',[classId]);
  await as(ids[1]);await assert.rejects(db.query('select assembly_join_class($1)',[code]));
  await as(ids[3]);assert.equal((await db.query('select * from assembly_reports')).rows.length,0);
- await as('', 'anon');await assert.rejects(db.query('select * from assembly_reports'));await assert.rejects(db.query('select assembly_join_class($1)',[code]));
+ await assert.rejects(db.query('select assembly_reopen_class($1)',[classId]));
+ await assert.rejects(db.query('select assembly_delete_class($1)',[classId]));
+ await as(ids[0]);await assert.rejects(db.query('select assembly_delete_class($1)',[classId]));
+ await assert.rejects(db.query('select assembly_reopen_class($1)',[classId]));
+ await as(ids[2]);await db.query('select assembly_reopen_class($1)',[classId]);
+ await as(ids[1]);await db.query('select assembly_join_class($1)',[code]);
+ await as(ids[2]);await db.query('select assembly_delete_class($1)',[classId]);
+ assert.equal((await db.query('select * from assembly_reports')).rows.length,0);
+ await as(ids[0]);assert.equal((await db.query('select * from assembly_memberships')).rows.length,0);
+ const retained=await db.query('select class_id from assembly_reports');assert.equal(retained.rows.length,2);assert.ok(retained.rows.every(r=>r.class_id===null));
+ await assert.rejects(db.query('select assembly_join_class($1)',[code]));
+ await as('', 'anon');await assert.rejects(db.query('select assembly_reopen_class($1)',[classId]));await assert.rejects(db.query('select assembly_delete_class($1)',[classId]));await assert.rejects(db.query('select * from assembly_reports'));await assert.rejects(db.query('select assembly_join_class($1)',[code]));
  }finally{await db.close()}
 });
