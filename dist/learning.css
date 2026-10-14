@@ -1,0 +1,10 @@
+.next-action{margin:0 0 18px;padding:10px 12px;border-radius:6px;background:#eaf3ef;color:#254b40;font-size:13px;border-left:3px solid #247765}
+.proposal-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}.proposal-grid .plan-field{margin:5px 0}.proposal-grid input{width:100%}
+.terms-preview{padding:14px;background:#eef4f0;border-radius:8px}.terms-preview p{margin:6px 0;font-size:14px}
+.review-log{padding-left:22px}.review-log li{margin:12px 0;font-size:14px;overflow-wrap:anywhere}
+.reflection-field{display:block;margin:16px 0;font-size:15px;color:#29443d}.reflection-field textarea{display:block;width:100%;min-height:90px;resize:vertical;padding:12px;border:1px solid #8aa39a;border-radius:7px;background:#fff;color:#173b33;font:15px/1.6 'DM Sans',Arial}
+.tour-card{padding:18px;background:#f0f5f1;border:1px solid #b9cec4;border-radius:10px}.tour-card strong{font-size:20px;display:block;margin-bottom:8px}.tour-actions{display:flex;gap:10px}.tour-actions button{flex:1}
+.account-dialog{width:min(720px,calc(100vw - 24px))}.account-dialog label{display:block;margin:12px 0;color:#243f36;font-size:15px}.account-dialog input,.account-dialog select{display:block;width:100%;padding:12px;border:1px solid #90aaa0;border-radius:6px;background:white;color:#193e32;font:inherit}
+.account-status{font-size:14px;color:#234f43;white-space:pre-wrap}.account-status.error{color:#982d24}.account-card{border:1px solid #bbccc3;border-radius:8px;padding:15px;margin:12px 0}.account-card h3{margin:0 0 7px}.account-card p{margin:5px 0}.account-card code{font-size:17px;letter-spacing:1px}.account-dialog .secondary{text-align:left}.account-dialog small{color:#496156}.account-dialog .account-form{padding-bottom:16px;border-bottom:1px solid #d4ded9}.account-dialog .close{float:right}
+.header-actions .iconbutton{gap:5px;padding:8px}.header-actions .iconbutton span{font-size:12px}.session-label{display:none}
+@media(max-width:600px){.proposal-grid{grid-template-columns:1fr}.header-actions{gap:2px}.header-actions .iconbutton{padding:5px;min-width:30px}.header-actions .iconbutton span{display:none}}
