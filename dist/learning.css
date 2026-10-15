@@ -8,3 +8,10 @@
 .account-status{font-size:14px;color:#234f43;white-space:pre-wrap}.account-status.error{color:#982d24}.account-card{border:1px solid #bbccc3;border-radius:8px;padding:15px;margin:12px 0}.account-card h3{margin:0 0 7px}.account-card p{margin:5px 0}.account-card code{font-size:17px;letter-spacing:1px}.account-dialog .secondary{text-align:left}.account-dialog small{color:#496156}.account-dialog .account-form{padding-bottom:16px;border-bottom:1px solid #d4ded9}.account-dialog .close{float:right}
 .header-actions .iconbutton{gap:5px;padding:8px}.header-actions .iconbutton span{font-size:12px}.session-label{display:none}
 @media(max-width:600px){.proposal-grid{grid-template-columns:1fr}.header-actions{gap:2px}.header-actions .iconbutton{padding:5px;min-width:30px}.header-actions .iconbutton span{display:none}}
+
+/* Compact controls reveal the chamber while delegates speak. */
+.panel-toggle{position:fixed;right:16px;top:calc(var(--head) + 12px);z-index:4;padding:10px 14px;border:1px solid #b9d0ce;border-radius:8px;background:#123d40;color:#fff;font-size:13px;font-weight:600;min-height:40px;box-shadow:0 4px 16px #00182040}
+.panel{top:calc(var(--head) + 62px);bottom:auto;max-height:calc(100dvh - var(--head) - var(--foot) - 78px)}
+.panel[hidden]{display:none!important}
+.panel-collapsed .caption{right:16px;max-width:900px;margin-left:auto;margin-right:auto}
+@media(max-width:600px){.panel-toggle{right:8px;font-size:12px;padding:9px 10px}.panel-collapsed .caption{left:8px;right:8px}}
