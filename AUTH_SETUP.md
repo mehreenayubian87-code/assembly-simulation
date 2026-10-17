@@ -41,3 +41,9 @@ Check that the query inserted one row (or that the existing role is correct), th
 ## Classroom management update
 
 After the base schema, run supabase/classroom-management.sql to enable reopening and deletion. Only the classroom owner can perform these actions. Reopening retains the existing code. Deletion removes the classroom and memberships, while reports remain private to their student owners; the professor loses access. The interface requires a separate explicit confirmation before deletion. Create class creates a new classroom with a new code.
+
+## Authentication first entry
+
+The welcome page verifies the Supabase user, professor role and classroom memberships before loading the chamber scripts. Approved professors can enter without a class; other accounts must have at least one membership. Failed code attempts may create an anonymous identity but do not unlock the chamber. Signing out reloads the welcome page and clears in-memory simulation state. Existing signed-in eligible users enter directly. Closing joining does not remove existing memberships; deleting a class does.
+
+This is the entry workflow of a static GitHub Pages application. It is not server-side protection of downloadable public source/assets. Supabase row-level policies continue to enforce private data access. Restricting distribution of the simulation code itself would require authenticated server hosting.
