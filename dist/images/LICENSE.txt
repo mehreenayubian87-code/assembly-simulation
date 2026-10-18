@@ -1,0 +1,6 @@
+assembly-welcome.jpg
+Assembly Hall at the Palais des Nations in June 2016
+Author: Nick-D
+Source: https://commons.wikimedia.org/wiki/File:Assembly_Hall_at_the_Palais_des_Nations_in_June_2016.jpg
+License: CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0/
+1280px Wikimedia thumbnail. Display cropped and shaded using CSS.
