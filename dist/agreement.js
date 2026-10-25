@@ -15,7 +15,7 @@ const Agreement=(()=>{
  const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  function html(r){return `<div class="report-meta">${escape(r.id)} · ${escape(r.date)}<br>${r.mode==='solo'?'Solo practice':'Shared-screen classroom'} · Adopted by simulated consensus<br>${escape(r.roster)}</div>`+sections(r).map((s,i)=>`<section class="agreement-section"><h3>${escape(s.title)}</h3><p>${escape(s.text)}</p>${i===1?`<table class="agreement-table"><thead><tr><th>Delegation</th><th>Share</th><th>Courses</th></tr></thead><tbody>${r.rows.map(x=>`<tr><th scope="row">${escape(x.name)}</th><td>${escape(x.share)}%</td><td>${escape(x.courses)} million</td></tr>`).join('')}<tr><th scope="row">Total</th><td>100%</td><td>${r.rows.reduce((n,x)=>n+Number(x.courses),0)} million</td></tr></tbody></table>`:''}</section>`).join('')}
  function sections(r){
-  const result=[...r.sections];
+  const result=[...r.sections,...(r.diplomacy||[])];
   for(const p of (r.history||[]))result.push({title:'Draft '+p.number+' — '+p.result,text:(p.terms?.alloc||[]).join('/')+'% allocation; financing '+p.terms?.fund+'m; delivery '+p.terms?.delivery+'m; reporting '+(p.terms?.report?'included':'absent')+'; guarantee '+(p.terms?.guarantee?'included':'absent')+'. Changes: '+(p.changes||[]).join('; ')});
   const prompts=['Which concession made agreement possible?','Whose priorities remained unmet?','What must happen next: owner, timing and monitoring?'];
   prompts.forEach((title,i)=>result.push({title,text:r.reflection?.[i]||'No reflection recorded.'}));
