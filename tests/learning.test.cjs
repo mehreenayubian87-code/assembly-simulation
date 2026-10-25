@@ -22,3 +22,8 @@ test('report uses negotiated values, escapes saved content and paginates long re
  const count=Number(pdf.match(/\/Count (\d+)/)[1]);assert.ok(count>=2);
  const offset=Number(pdf.match(/startxref\n(\d+)/)[1]);assert.equal(pdf.slice(offset,offset+4),'xref');
 });
+test('live-room PDF preserves shared wording without inventing a resource allocation',()=>{
+ const r={live:true,title:'Student negotiation',id:'ROOM-TEST',date:'2026-10-25',mode:'live',roster:'Kitala; Nordland; Professor',rows:[],sections:[{title:'Decision',text:'Adopted after plenary.'},{title:'Shared resolution',text:'URGES transparent delivery reporting <script>not markup</script>.'}]};
+ assert.ok(!A.html(r).includes('<table'));assert.ok(!A.html(r).includes('<script>'));
+ const pdf=Buffer.from(A.pdf(r)).toString();assert.match(pdf,/Student negotiation/);assert.match(pdf,/transparent delivery reporting/);assert.ok(!pdf.includes('Total / 100%'));assert.ok(!pdf.includes('No reflection recorded'));
+});
