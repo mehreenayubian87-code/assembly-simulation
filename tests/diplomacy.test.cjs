@@ -23,3 +23,13 @@ test('draft history and explanations are escaped and included in downloadable re
  assert.match(A.html(r),/Previous:/);assert.match(A.html(r),/rule-based/);
  const pdf=Buffer.from(A.pdf(r)).toString();assert.match(pdf,/Explanations of position/);assert.match(pdf,/Previous:/);
 });
+test('original student contributions preserve authorship, export safely and close after adoption',()=>{
+ D.reset();assert.throws(()=>D.contribute('Unknown','Question','A question about the draft text'));
+ D.contribute('Kitala','National statement','We propose delivery support <script>unsafe</script> for remote communities.');
+ const r=A.create({alloc:[35,20,30,15],fund:35,delivery:10,report:true,guarantee:true,supply:80},{id:'TEST',date:'2026-10-25',mode:'solo',opening:'original',attempts:1,failures:0});
+ r.diplomacy=D.reportSections();assert.match(r.sections[5].text,/student-authored/);
+ assert.match(A.html(r),/Student-authored participation/);assert.ok(!A.html(r).includes('<script>'));
+ assert.match(Buffer.from(A.pdf(r)).toString(),/We propose delivery support/);
+ agree();D.committee();D.adopt();assert.throws(()=>D.contribute('Kitala','Question','Can we change the adopted wording?'));
+ D.reset();assert.equal(D.snapshot().contributions.length,0);
+});
