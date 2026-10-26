@@ -3,7 +3,7 @@ test('shared code requests reveal no brief until owner approval and cannot bypas
  const db=new PGlite();const ids=Array.from({length:8},(_,i)=>'10000000-0000-0000-0000-'+String(i+1).padStart(12,'0'));
  try{
  await db.exec(`create role anon;create role authenticated;create role service_role;create schema auth;create table auth.users(id uuid primary key);create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;grant usage on schema auth to authenticated,anon;grant execute on function auth.uid() to authenticated,anon;`);
- for(const f of ['schema','live-rooms','live-classrooms-v2','room-student-numbers','manual-role-assignment','teaching-sessions','prepared-entry','prepared-entry'])await db.exec(fs.readFileSync('supabase/'+f+'.sql','utf8'));
+ for(const f of ['schema','live-rooms','live-classrooms-v2','room-student-numbers','manual-role-assignment','teaching-sessions','prepared-entry','prepared-entry','audit-session-guards'])await db.exec(fs.readFileSync('supabase/'+f+'.sql','utf8'));
  for(const id of ids)await db.query('insert into auth.users values($1)',[id]);await db.query("insert into assembly_roles values($1,'professor'),($2,'professor')",[ids[0],ids[7]]);
  const briefs=Object.fromEntries(['k','n','m','p'].map(k=>[k,{name:k,priorities:'CONFIDENTIAL_'+k}]));
  await db.query("insert into assembly_topics values('test','Topic','Public summary','{}','Starting draft with sufficient text',$1,'[]')",[JSON.stringify(briefs)]);
@@ -34,5 +34,9 @@ test('shared code requests reveal no brief until owner approval and cannot bypas
  await as(2);await assert.rejects(db.query('select assembly_save_room_report($1,$2,1)',[rid,'Stale overwrite']));assert.equal((await snap()).report_text,'Agreed policy and implementation responsibilities.');
  await as(6);await assert.rejects(db.query('select assembly_save_room_report($1,$2,2)',[rid,'Unauthorized report']));
  await as(0);await next();await assert.rejects(db.query('select assembly_save_room_report($1,$2,2)',[rid,'Late edit']));
+ await db.query('select assembly_end_teaching_session($1,$2)',[cid,(await session()).revision]);
+ await assert.rejects(db.query("select assembly_live_action($1,'message',$2)",[rid,JSON.stringify({text:'After ending'})]),/ended/);
+ await assert.rejects(approve(3),/ended/);
+ assert.equal((await snap()).report_text,'Agreed policy and implementation responsibilities.');
  }finally{await db.close()}
 });
