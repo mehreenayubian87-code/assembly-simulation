@@ -19,6 +19,14 @@ window.AssemblyAccount = (() => {
  }
  function normalizeClassCode(value){return String(value).replace(/[\s\u200B-\u200D\uFEFF]/g,'').toUpperCase();}
  function checkCodeInput(input){const start=input.selectionStart,old=input.value;const value=normalizeClassCode(old);if(value!==old){input.value=value;if(start!==null){const cursor=normalizeClassCode(old.slice(0,start)).length;input.setSelectionRange(cursor,cursor);}}const valid=/^[A-Z0-9]{12}$/.test(value);input.setCustomValidity(valid?'':'Enter exactly 12 letters and numbers. You have entered '+value.length+' characters.');const hint=input.form?.querySelector('[data-code-hint]');if(hint)hint.textContent=value.length+' of 12 characters'+(value.length>12?' ? too many; check the classroom code':'');}
+ modal.addEventListener('paste',e=>{
+ const input=e.target;if(input.name!=='code'||!e.clipboardData)return;
+ const text=e.clipboardData.getData('text/plain');if(!text)return;
+ e.preventDefault();const cleaned=normalizeClassCode(text);
+ if(/^[A-Z0-9]{12}$/.test(cleaned)){input.value=cleaned;input.setSelectionRange(12,12);}
+ else{const start=input.selectionStart??input.value.length,end=input.selectionEnd??start;input.value=input.value.slice(0,start)+text+input.value.slice(end);input.setSelectionRange(start+text.length,start+text.length);}
+ checkCodeInput(input);joinDraft.code=input.value;
+ });
  modal.addEventListener('input',e=>{if(e.target.name==='code'){checkCodeInput(e.target);joinDraft.code=e.target.value;}if(e.target.name==='studentName')joinDraft.name=e.target.value;});
  modal.addEventListener('invalid',e=>{if(e.target.name==='code')checkCodeInput(e.target)},true);
  async function requestEntry(code,name){
