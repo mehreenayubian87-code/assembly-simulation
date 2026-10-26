@@ -54,3 +54,11 @@ WHO source pages supply background rather than fictional national mandates. All 
 Automated tests cover student/teacher separation, private catalog and brief access, revoked legacy routes, classroom isolation, professor-only assignment, duplicate-role prevention, minimum attendance, timers, inject isolation, stale draft/version checks and consensus transitions. The combined private setup file was executed twice locally and contained four topics with 32 briefs.
 
 After setup in Supabase, conduct a professor-plus-four-student trial using separate browser sessions. Verify each assigned brief, send messages from two devices, revise a draft, start/pause/resume the clock, inject an event in one room, and confirm that another room does not receive it. Browser visual QA was unavailable in the agent environment. This production acceptance check is not claimed complete.
+
+
+### Room-local student numbers
+Apply `supabase/room-student-numbers.sql` after the classroom v2 setup. Existing assignments are preserved and numbered. This migration is safe to rerun.
+
+Students use their class code, open the specific room named by the professor, and click **Join this room**. The server allocates a stable Student 1?8 number within that room's capacity. The student sees this number on their device. The professor refreshes the student list and assigns a distinct delegation to each numbered student. Empty slots are marked Not joined yet. Numbers restart in every room; account IDs are not displayed. A student cannot enroll in two active rooms of the same class. Existing minimum-four-student start rule remains in force.
+
+Role release frees the role, not the student's numbered place. The private roster is available only to the room's owning professor. Students see only their own number and assigned briefing.

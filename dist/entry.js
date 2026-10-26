@@ -1,6 +1,6 @@
 window.AssemblyEntry=(()=>{
  let loading;
- const files=['vendor/babylon.js','model.js?v=0.4','roles.js?v=2.0','scene.js?v=0.4','agreement.js?v=2.2','negotiation.js?v=1.0','diplomacy.js?v=1.1','live-rooms.js?v=2.0','chamber.js?v=3.0'];
+ const files=['vendor/babylon.js','model.js?v=0.4','roles.js?v=2.0','scene.js?v=0.4','agreement.js?v=2.2','negotiation.js?v=1.0','diplomacy.js?v=1.1','live-rooms.js?v=2.1','chamber.js?v=3.0'];
  function enter(){if(loading)return loading;loading=(async()=>{
   for(const src of files)await new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=src;script.onload=resolve;script.onerror=()=>reject(Error('The assembly could not load. Refresh to try again.'));document.body.append(script)});
   document.getElementById('authLanding').hidden=true;
