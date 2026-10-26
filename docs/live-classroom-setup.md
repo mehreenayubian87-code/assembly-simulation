@@ -1,3 +1,5 @@
+> Superseded by [the v2 classroom guide](classroom-upgrade-v2.md): rooms now support 4?8 students, professor assignment, private role briefs, multiple topics, timers and unexpected events.
+
 # Live classroom setup
 
 ## One-time database update
