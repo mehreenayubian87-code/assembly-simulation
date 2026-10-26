@@ -1,14 +1,14 @@
 const {test}=require('node:test');const assert=require('node:assert/strict');const vm=require('node:vm');const fs=require('node:fs');
 const policy=require('../dist/access.js');
 async function run(user,role,memberships,fail=false){
- let starts=0,reloads=0,authCallback;
+ let starts=0,reloads=0,authCallback,modal;
  const nodes={};const node=()=>({hidden:false,innerHTML:'',textContent:'',classList:{toggle(){}},setAttribute(){},addEventListener(){},append(){},querySelector(){return node()},show(){this.open=true},showModal(){this.open=true},close(){this.open=false}});
- const document={body:node(),createElement:node,getElementById:id=>nodes[id]||(nodes[id]=node())};
+ const document={body:node(),createElement:()=>{modal=node();return modal},getElementById:id=>nodes[id]||(nodes[id]=node())};
  const client={auth:{getUser:async()=>({data:{user},error:null}),onAuthStateChange:cb=>{authCallback=cb}},from(table){const q={select(){return q},eq(){return q},order(){return q},limit(){return q},maybeSingle(){return q},then(resolve){return Promise.resolve({data:table==='assembly_roles'?(role?{role:'professor'}:null):table==='assembly_memberships'?memberships:[],error:fail?{message:'Unavailable'}:null}).then(resolve)}};return q}};
  const window={ASSEMBLY_AUTH_CONFIG:{url:'https://example.supabase.co',publishableKey:'sb_publishable_example'},createAssemblyAuthClient:()=>client,AssemblyEntry:{enter:async()=>{starts++}},addEventListener(){},localStorage:{getItem(){return null},setItem(){},removeItem(){}}};
  vm.runInNewContext(fs.readFileSync('dist/account.js','utf8'),{window,document,AssemblyAccess:policy,location:{reload(){reloads++}},setTimeout,console});
  await new Promise(r=>setImmediate(r));await new Promise(r=>setImmediate(r));
- return {starts,signout(){authCallback('SIGNED_OUT',null);return reloads}};
+ return {starts,html:()=>modal.innerHTML,async repeatSignIn(){modal.innerHTML='Preserved typed form and error';authCallback('SIGNED_IN',{user});await new Promise(r=>setTimeout(r,10));return modal.innerHTML},signout(){authCallback('SIGNED_OUT',null);return reloads}};
 }
 test('account bootstrap does not load the assembly for a signed-out user',async()=>assert.equal((await run(null,false,[])).starts,0));
 test('Google identity or anonymous identity without membership cannot enter',async()=>{
@@ -20,3 +20,10 @@ test('approved professors and classroom members enter, sign-out resets the page'
  assert.equal((await run({id:'student'},false,[{class_id:'c'}])).starts,1);
 });
 test('failed access lookup keeps entry locked',async()=>assert.equal((await run({id:'teacher'},true,[],true)).starts,0));
+
+test('unapproved anonymous session retains student entry UI and ignores duplicate sign-in events',async()=>{
+ const pending=await run({id:'pending-student',is_anonymous:true},false,[]);
+ assert.match(pending.html(),/studentJoinForm/);
+ assert.doesNotMatch(pending.html(),/My learning workspace|pending-student/);
+ assert.equal(await pending.repeatSignIn(),'Preserved typed form and error');
+});
