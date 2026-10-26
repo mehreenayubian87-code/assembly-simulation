@@ -27,3 +27,7 @@ Click Enable bell sound in the lobby to allow audio on that device. A visible el
 This release provides text discussion, announcements, private briefs, session timing and report writing. It does not provide video calls, microphone communication or screen sharing. A conferencing integration is still required for the requested all-in-one remote experience. The named roster cannot currently be edited after saving; prepare it carefully. Existing rooms and prior work are retained.
 
 Automated database tests cover approval, rejection, duplicate claims, no brief before approval, room isolation, blocked legacy bypasses, professor ownership, stage timing, and stale report saves. Browser visual review and a real professor-plus-students trial remain necessary after applying the migration.
+
+## Ending a session early
+
+Apply END-TEACHING-SESSION.sql after the prepared classroom setup. The professor can choose End entire session now at any stage, including a paused prebrief with no approved participants. Confirmation is required. The session cannot resume; saved room work is retained and room actions become read-only. The stage-advance button remains separate and requires all prepared students to be approved before negotiation. Error feedback appears at the top of the lobby.
