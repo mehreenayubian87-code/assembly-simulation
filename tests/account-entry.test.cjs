@@ -16,8 +16,8 @@ test('Google identity or anonymous identity without membership cannot enter',asy
  assert.equal((await run({id:'guest',is_anonymous:true},false,[])).starts,0);
 });
 test('approved professors and classroom members enter, sign-out resets the page',async()=>{
- const teacher=await run({id:'teacher'},true,[]);assert.equal(teacher.starts,1);assert.equal(teacher.signout(),1);
- assert.equal((await run({id:'student'},false,[{class_id:'c'}])).starts,1);
+ const teacher=await run({id:'teacher'},true,[]);assert.equal(teacher.starts,1);assert.match(teacher.html(),/Professor workspace/);assert.match(teacher.html(),/Manage teaching sessions/);assert.doesNotMatch(teacher.html(),/Account temporarily unavailable/);assert.equal(teacher.signout(),1);
+ const student=await run({id:'student'},false,[{class_id:'c'}]);assert.equal(student.starts,1);assert.match(student.html(),/My learning workspace/);assert.doesNotMatch(student.html(),/Account temporarily unavailable/);
 });
 test('failed access lookup keeps entry locked',async()=>assert.equal((await run({id:'teacher'},true,[],true)).starts,0));
 
