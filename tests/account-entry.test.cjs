@@ -5,7 +5,7 @@ async function run(user,role,memberships,fail=false){
  const nodes={};const node=()=>({hidden:false,innerHTML:'',textContent:'',classList:{toggle(){}},setAttribute(){},addEventListener(){},append(){},querySelector(){return node()},show(){this.open=true},showModal(){this.open=true},close(){this.open=false}});
  const document={body:node(),createElement:node,getElementById:id=>nodes[id]||(nodes[id]=node())};
  const client={auth:{getUser:async()=>({data:{user},error:null}),onAuthStateChange:cb=>{authCallback=cb}},from(table){const q={select(){return q},eq(){return q},order(){return q},limit(){return q},maybeSingle(){return q},then(resolve){return Promise.resolve({data:table==='assembly_roles'?(role?{role:'professor'}:null):table==='assembly_memberships'?memberships:[],error:fail?{message:'Unavailable'}:null}).then(resolve)}};return q}};
- const window={ASSEMBLY_AUTH_CONFIG:{url:'https://example.supabase.co',publishableKey:'sb_publishable_example'},createAssemblyAuthClient:()=>client,AssemblyEntry:{enter:async()=>{starts++}},addEventListener(){},localStorage:{}};
+ const window={ASSEMBLY_AUTH_CONFIG:{url:'https://example.supabase.co',publishableKey:'sb_publishable_example'},createAssemblyAuthClient:()=>client,AssemblyEntry:{enter:async()=>{starts++}},addEventListener(){},localStorage:{getItem(){return null},setItem(){},removeItem(){}}};
  vm.runInNewContext(fs.readFileSync('dist/account.js','utf8'),{window,document,AssemblyAccess:policy,location:{reload(){reloads++}},setTimeout,console});
  await new Promise(r=>setImmediate(r));await new Promise(r=>setImmediate(r));
  return {starts,signout(){authCallback('SIGNED_OUT',null);return reloads}};
