@@ -3,7 +3,7 @@ test('prepared rooms and facilitator timing remain private and professor control
  const db=new PGlite();const ids=Array.from({length:7},(_,i)=>'00000000-0000-0000-0000-'+String(i+1).padStart(12,'0'));
  try{
  await db.exec(`create role anon;create role authenticated;create role service_role;create schema auth;create table auth.users(id uuid primary key);create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;grant usage on schema auth to authenticated,anon;grant execute on function auth.uid() to authenticated,anon;`);
- for(const f of ['schema','live-rooms','live-classrooms-v2','room-student-numbers','manual-role-assignment','teaching-sessions','teaching-sessions','end-teaching-session','end-teaching-session'])await db.exec(fs.readFileSync('supabase/'+f+'.sql','utf8'));
+ for(const f of ['schema','live-rooms','live-classrooms-v2','room-student-numbers','manual-role-assignment','teaching-sessions','teaching-sessions','end-teaching-session','end-teaching-session','session-lifecycle','session-lifecycle'])await db.exec(fs.readFileSync('supabase/'+f+'.sql','utf8'));
  for(const id of ids)await db.query('insert into auth.users values($1)',[id]);await db.query("insert into assembly_roles values($1,'professor'),($2,'professor')",[ids[0],ids[6]]);
  const briefs=Object.fromEntries(['k','n','m','p','s'].map(k=>[k,{name:k,priorities:'CONFIDENTIAL_'+k}]));
  await db.query("insert into assembly_topics values('test','Test topic','Public summary','{}','A sufficiently long starting resolution for the test',$1,'[]')",[JSON.stringify(briefs)]);
@@ -41,5 +41,8 @@ test('prepared rooms and facilitator timing remain private and professor control
  const ended=(await rpc('select assembly_end_teaching_session($1,$2) s',[early,earlyState.revision])).s;
  assert.equal(ended.stage,'finished');assert.equal(ended.ends,null);assert.equal(ended.remaining,null);assert.equal(ended.timing_log.at(-1).reason,'Professor ended session early');
  assert.equal((await rpc('select assembly_end_teaching_session($1,$2) s',[early,earlyState.revision])).s.stage,'finished');
+ await as(6);await assert.rejects(db.query('select assembly_resume_saved_session($1,$2)',[early,ended.revision]));await assert.rejects(db.query('select assembly_delete_session_permanently($1)',[early]));await as(0);
+ const reopened=(await rpc('select assembly_resume_saved_session($1,$2) s',[early,ended.revision])).s;assert.equal(reopened.stage,'prebrief');assert.equal(reopened.remaining,earlyState.remaining);assert.equal(reopened.ends,null);
+ await db.query('select assembly_delete_session_permanently($1)',[early]);await assert.rejects(db.query('select assembly_session_snapshot($1)',[early]));
  }finally{await db.close()}
 });
