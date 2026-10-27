@@ -6,7 +6,7 @@ const tick=()=>new Promise(resolve=>setImmediate(resolve));
 function fixture(){
  const elements=new Map();
  function element(id){if(!elements.has(id))elements.set(id,{innerHTML:'',textContent:'',value:'',checked:true,parentElement:{},style:{},classList:{toggle(){}},setAttribute(){},addEventListener(){},focus(){},showModal(){this.open=true},close(){this.open=false}});return elements.get(id)}
- const context=vm.createContext({console,TextEncoder,Date,Math,setTimeout(){},window:{scrollTo(){}},document:{getElementById:element,querySelectorAll:()=>[],body:{classList:{toggle(){}}}},AssemblyScene:{init(){},view(){},screen(){},speaking(){}},fetch:async()=>({ok:true,json:async()=>JSON.parse(fs.readFileSync('dist/dialogue.json','utf8'))}),Audio:class{play(){queueMicrotask(()=>this.onended?.());return Promise.resolve()}pause(){}}});
+ const context=vm.createContext({console,TextEncoder,Date,Math,setTimeout(){},window:{scrollTo(){}},document:{getElementById:element,querySelectorAll:()=>[],body:{classList:{toggle(){}}}},AssemblyScene:{init(){},view(){},screen(){},setTopic(){},speaking(){}},fetch:async()=>({ok:true,json:async()=>JSON.parse(fs.readFileSync('dist/dialogue.json','utf8'))}),Audio:class{play(){queueMicrotask(()=>this.onended?.());return Promise.resolve()}pause(){}}});
  for(const name of ['model','roles','agreement','negotiation','diplomacy','chamber'])vm.runInContext(fs.readFileSync('dist/'+name+'.js','utf8'),context);
  return {run:s=>vm.runInContext(s,context),element};
 }

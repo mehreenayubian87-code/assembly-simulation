@@ -1,6 +1,7 @@
 /* Original, stylized architecture. Not an architectural survey of a WHO venue. */
 const AssemblyScene=(()=>{
  let engine,scene,camera,screenTexture,screenMesh,active='',move=null,last=0;
+ let agenda='';
  const desks={}, people=[], lamps={};
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  function init(){
@@ -37,7 +38,7 @@ const AssemblyScene=(()=>{
   screenTexture=new B.DynamicTexture('central agenda',{width:1536,height:768},scene,false);
   const sm=new B.StandardMaterial('screen glass',scene);sm.diffuseTexture=screenTexture;sm.emissiveTexture=screenTexture;sm.disableLighting=true;sm.specularColor=B.Color3.Black();
   box('screen surround',8.4,4.3,.22,0,4.1,11,black);screenMesh=B.MeshBuilder.CreatePlane('agenda screen',{width:8,height:4},scene);screenMesh.position.set(0,4.1,10.85);screenMesh.material=sm;
-  screen('EQUITABLE ACCESS','A shared challenge. A negotiated response.','AGENDA ITEM 01');
+  screen('CHOOSE A HEALTH ISSUE','Select solo practice or enter your assigned classroom.','ASSEMBLY');
   const colors=[['#60867a','#d6bd78','#e5dfc8'],['#3b697c','#ebdfc7','#75a5a6'],['#b39683','#ddd7c5','#87769f'],['#568177','#e0d4a4','#6b95a3']];
   colors.forEach((cs,i)=>{const x=6+i*.75;cyl('flag stand',.4,.08,x,.55,10,gold);cyl('flagpole',.025,4.8,x,2.9,10,gold);cs.forEach((c,j)=>box('fictional flag',.55,.28,.015,x+.27,4.5-j*.28,10,mat('flag stripe '+i+j,c)))});
   function person(parent,x,z,m,skinMat,id){cyl('torso',.4,.55,x,1.19,z,m,parent);box('shoulders',.48,.22,.25,x,1.4,z,m,parent);const head=sphere('head',.28,x,1.66,z,skinMat,parent);const cap=sphere('hair',.285,x,1.72,z-.025,hair,parent);cap.scaling.y=.55;box('collar',.13,.12,.08,x,1.48,z+.14,white,parent);box('tie',.045,.25,.02,x,1.30,z+.205,gold,parent);for(const sx of [-.23,.23]){const arm=cyl('sleeve',.13,.47,x+sx,1.17,z+.10,m,parent);arm.rotation.x=-.55;sphere('hand',.12,x+sx,.98,z+.22,skinMat,parent)}shadows.addShadowCaster(head);people.push({head,base:head.position.y,id});}
@@ -73,8 +74,18 @@ const AssemblyScene=(()=>{
  }
  function view(name){if(!camera)return;const V=BABYLON.Vector3;const defs={overview:[[0,8,-17],[2,1.5,3]],seat:[[-2,1.9,-4.1],[.5,2.8,8.5]],chair:[[0,3,-.1],[0,2.6,8.7]],consult:[[-9,2.4,.1],[-8.9,1.4,4.4]],Nordland:[[-6,2.6,-3.5],[-5,1.2,.0]],Meridia:[[1,2.6,-6],[2.4,1.2,-2]],Pelagia:[[3.3,2.7,-2.5],[5.3,1.2,1]]};const d=defs[name]||defs.overview;move={from:camera.position.clone(),to:V.FromArray(d[0]),fromTarget:camera.getTarget().clone(),toTarget:V.FromArray(d[1]),start:performance.now(),duration:reduced?1:1400};}
  function speaking(name){active=name;Object.entries(lamps).forEach(([n,m])=>{m.emissiveColor=BABYLON.Color3.FromHexString(n===name?'#c9ed97':'#455e59');m.diffuseColor=m.emissiveColor;});}
- function screen(title,subtitle,tag='AGENDA ITEM 01'){if(!screenTexture)return;const c=screenTexture.getContext();c.fillStyle='#152e3a';c.fillRect(0,0,1536,768);c.strokeStyle='#c9b982';c.lineWidth=3;c.beginPath();c.moveTo(90,140);c.lineTo(240,140);c.stroke();c.textAlign='left';c.fillStyle='#cbbd92';c.font='25px Arial';c.fillText(tag.toUpperCase(),90,210);c.fillStyle='#f4edda';c.font='58px Arial';const words=title.split(' ');let line='',y=320;for(const word of words){if(c.measureText(line+word).width>1320){c.fillText(line,90,y);line='';y+=73}line+=word+' '}c.fillText(line,90,y);c.fillStyle='#aebfc2';c.font='29px Arial';c.fillText(subtitle.slice(0,89),90,y+100);c.fillStyle='#597784';c.font='20px Arial';c.fillText('ASSEMBLY  /  INDEPENDENT EDUCATIONAL SIMULATION',90,687);screenTexture.update();}
- return {init,view,speaking,screen};
+ function setTopic(title,context=''){agenda=String(title||'').trim();screen(agenda||'CHOOSE A HEALTH ISSUE',context||'A shared challenge. A negotiated response.',agenda?'CURRENT HEALTH ISSUE':'ASSEMBLY');}
+ function screen(title,subtitle='',tag='CURRENT HEALTH ISSUE'){
+  if(!screenTexture)return;
+  const c=screenTexture.getContext(),heading=agenda||String(title),detail=agenda&&title!==agenda?String(title)+' ? '+subtitle:subtitle;
+  c.fillStyle='#152e3a';c.fillRect(0,0,1536,768);c.strokeStyle='#c9b982';c.lineWidth=3;c.beginPath();c.moveTo(90,110);c.lineTo(240,110);c.stroke();c.textAlign='left';c.fillStyle='#cbbd92';c.font='25px Arial';c.fillText(agenda?'CURRENT HEALTH ISSUE':tag.toUpperCase(),90,175);
+  function lines(text,size){c.font=size+'px Arial';const result=[];let line='';for(const word of String(text).split(/\s+/)){if(line&&c.measureText(line+' '+word).width>1320){result.push(line);line=word;}else line+=(line?' ':'')+word;}if(line)result.push(line);return result;}
+  let size=58,rows=lines(heading,size);while(rows.length>4&&size>28){size-=2;rows=lines(heading,size);}
+  c.fillStyle='#f4edda';rows.forEach((line,i)=>c.fillText(line,90,265+i*(size+12),1320));
+  c.fillStyle='#d0dee0';const sub=lines(detail,29),y=Math.max(420,265+rows.length*(size+12)+25);sub.slice(0,3).forEach((line,i)=>c.fillText(line,90,y+i*38,1320));
+  c.fillStyle='#9aafb6';c.font='20px Arial';c.fillText('ASSEMBLY  /  INDEPENDENT EDUCATIONAL SIMULATION',90,717);screenTexture.update();
+ }
+ return {init,view,speaking,screen,setTopic};
 })();
 
 
