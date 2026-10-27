@@ -38,5 +38,9 @@ test('shared code requests reveal no brief until owner approval and cannot bypas
  await assert.rejects(db.query("select assembly_live_action($1,'message',$2)",[rid,JSON.stringify({text:'After ending'})]),/ended/);
  await assert.rejects(approve(3),/ended/);
  assert.equal((await snap()).report_text,'Agreed policy and implementation responsibilities.');
+ await db.exec('reset role');await db.exec(fs.readFileSync('supabase/direct-student-entry.sql','utf8'));await db.query("update assembly_teaching_sessions set stage='negotiation' where class_id=$1",[cid]);
+ await as(6);await assert.rejects(request('Not on roster'));assert.equal((await request('Learner 1')).s,'approved');assert.equal((await snap()).role,'k');assert.equal((await request('Learner 1')).s,'approved');await assert.rejects(request('Learner 2'));
+ await as(1);await assert.rejects(snap());
+ await as(0);await assert.rejects(approve(6));
  }finally{await db.close()}
 });
