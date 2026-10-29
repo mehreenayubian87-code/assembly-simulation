@@ -16,7 +16,7 @@ test('Google identity or anonymous identity without membership cannot enter',asy
  assert.equal((await run({id:'guest',is_anonymous:true},false,[])).starts,0);
 });
 test('approved professors and classroom members enter, sign-out resets the page',async()=>{
- const teacher=await run({id:'teacher'},true,[]);assert.equal(teacher.starts,1);assert.match(teacher.html(),/Professor workspace/);assert.match(teacher.html(),/Manage teaching sessions/);assert.doesNotMatch(teacher.html(),/Account temporarily unavailable/);assert.equal(teacher.signout(),1);
+ const teacher=await run({id:'teacher'},true,[]);assert.equal(teacher.starts,1);assert.match(teacher.html(),/Facilitator workspace/);assert.match(teacher.html(),/Manage teaching sessions/);assert.doesNotMatch(teacher.html(),/Account temporarily unavailable/);assert.equal(teacher.signout(),1);
  const student=await run({id:'student'},false,[{class_id:'c'}]);assert.equal(student.starts,1);assert.match(student.html(),/My learning workspace/);assert.doesNotMatch(student.html(),/Account temporarily unavailable/);
 });
 test('failed access lookup keeps entry locked',async()=>assert.equal((await run({id:'teacher'},true,[],true)).starts,0));
@@ -52,7 +52,7 @@ test('Join displays validation and backend errors instead of silently doing noth
 
 test('professor sign-in clears old student approval polling without showing rejection',async()=>{
  const app=await run({id:'teacher'},true,[],false,null,'1',[{status:'rejected'}]);
- await app.pollApproval();assert.match(app.html(),/Professor workspace/);assert.equal(app.storage.has('assembly-awaiting-approval'),false);assert.equal(app.requests.length,0);assert.doesNotMatch(app.html()+app.feedback.textContent,/not approved/);
+ await app.pollApproval();assert.match(app.html(),/Facilitator workspace/);assert.equal(app.storage.has('assembly-awaiting-approval'),false);assert.equal(app.requests.length,0);assert.doesNotMatch(app.html()+app.feedback.textContent,/not approved/);
 });
 test('approval polling belongs to the current student and an empty result is not a rejection',async()=>{
  const other=await run({id:'student-b',is_anonymous:true},false,[],false,null,'student-a',[{status:'rejected'}]);await other.pollApproval();assert.equal(other.requests.length,0);
