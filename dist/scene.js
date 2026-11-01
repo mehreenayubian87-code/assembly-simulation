@@ -5,6 +5,7 @@ const AssemblyScene=(()=>{
  const desks={}, people=[], lamps={};
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  function init(){
+  if(engine)return;
   if(!window.BABYLON)throw new Error('The local 3D library is unavailable.');
   const B=BABYLON,V=B.Vector3, canvas=document.getElementById('world');
   engine=new B.Engine(canvas,true,{preserveDrawingBuffer:true,stencil:true,antialias:true});
@@ -68,7 +69,7 @@ const AssemblyScene=(()=>{
   for(let x=-12.5;x<-6.5;x+=.32)box('privacy screen',.09,3.0,.12,x,1.5,7.3,wood);
   const planter=mat('planter','#454c44'),leaf=mat('leaves','#55725c');for(const x of [-11.7,11.7]){cyl('plant pot',.7,.8,x,.4,9,planter);for(let i=0;i<6;i++){const l=sphere('foliage',.75,x+Math.sin(i)*.35,1.1+i*.17,9+Math.cos(i)*.27,leaf);l.scaling.y=1.5;}}
   scene.onPointerObservable.add(ev=>{if(ev.type===B.PointerEventTypes.POINTERPICK){const n=ev.pickInfo?.pickedMesh?.metadata?.delegate;if(n&&typeof Chamber!=='undefined')Chamber.delegate(n)}});
-  engine.runRenderLoop(()=>{const now=performance.now();if(move){const p=Math.min(1,(now-move.start)/move.duration),e=p*p*(3-2*p);camera.position=B.Vector3.Lerp(move.from,move.to,e);camera.setTarget(B.Vector3.Lerp(move.fromTarget,move.toTarget,e));if(p===1)move=null}people.forEach(o=>o.head.position.y=o.base+(o.id===active&&!reduced?Math.sin(now*.005)*.012:0));scene.render();last=now});
+  engine.runRenderLoop(()=>{if(!document.body.classList.contains('solo-workspace'))return;const now=performance.now();if(move){const p=Math.min(1,(now-move.start)/move.duration),e=p*p*(3-2*p);camera.position=B.Vector3.Lerp(move.from,move.to,e);camera.setTarget(B.Vector3.Lerp(move.fromTarget,move.toTarget,e));if(p===1)move=null}people.forEach(o=>o.head.position.y=o.base+(o.id===active&&!reduced?Math.sin(now*.005)*.012:0));scene.render();last=now});
   window.addEventListener('resize',()=>engine.resize());
   return true;
  }

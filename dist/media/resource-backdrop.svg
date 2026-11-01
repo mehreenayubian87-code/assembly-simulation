@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 430" role="img" aria-label="Health, water and digital infrastructure connected across a shared policy system">
+<defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#12394b"/><stop offset="1" stop-color="#0c6571"/></linearGradient><pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0H0V36" fill="none" stroke="#c4e4e8" stroke-opacity=".08"/></pattern></defs>
+<rect width="720" height="430" rx="24" fill="url(#g)"/><rect width="720" height="430" fill="url(#grid)"/>
+<g fill="none" stroke="#9bcacb" stroke-width="2"><ellipse cx="360" cy="218" rx="190" ry="140"/><path d="M170 218H550M360 78V358M238 108Q360 218 238 328M482 108Q360 218 482 328"/><path d="M155 135L360 218 565 135M360 218L360 355" stroke="#dce9ad" stroke-width="3" stroke-dasharray="6 8"/></g>
+<g fill="#123342" stroke="#a0d5d5" stroke-width="2"><rect x="96" y="78" width="118" height="112" rx="18"/><rect x="506" y="78" width="118" height="112" rx="18"/><rect x="301" y="281" width="118" height="112" rx="18"/></g>
+<path d="M155 96C140 118 133 126 133 140a22 22 0 0044 0c0-14-7-22-22-44" fill="#8cd5de"/>
+<g fill="#dce9ad"><rect x="530" y="99" width="70" height="18" rx="3"/><rect x="530" y="124" width="70" height="18" rx="3"/><rect x="530" y="149" width="70" height="18" rx="3"/></g>
+<path d="M349 303H371V325H393V347H371V369H349V347H327V325H349Z" fill="#f4d8a1"/>
+<circle cx="360" cy="218" r="34" fill="#e7edcb"/><path d="M342 218l12 12 25-28" fill="none" stroke="#176a70" stroke-width="5"/>
+<g font-family="Arial,sans-serif" font-size="13" letter-spacing="2" fill="#e2eff1"></g></svg>
