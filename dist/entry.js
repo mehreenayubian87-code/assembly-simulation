@@ -1,11 +1,11 @@
 window.AssemblyEntry=(()=>{
  let loading;
- const files=['workspace.js?v=1.0','conferencing.js?v=1.2','media-check.js?v=1.2','vendor/babylon.js','model.js?v=0.4','roles.js?v=2.0','scene.js?v=0.6','agreement.js?v=2.2','negotiation.js?v=1.0','diplomacy.js?v=1.1','live-rooms.js?v=3.7','workshop.js?v=2.0','chamber.js?v=3.5'];
+ const files=['conferencing.js?v=1.2','media-check.js?v=1.2','vendor/babylon.js','model.js?v=0.4','roles.js?v=2.0','scene.js?v=0.5','agreement.js?v=2.2','negotiation.js?v=1.0','diplomacy.js?v=1.1','live-rooms.js?v=3.6','workshop.js?v=1.9','chamber.js?v=3.4'];
  function enter(){if(loading)return loading;loading=(async()=>{
   for(const src of files)await new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=src;script.onload=resolve;script.onerror=()=>reject(Error('The assembly could not load. Refresh to try again.'));document.body.append(script)});
   document.getElementById('authLanding').hidden=true;
   const app=document.getElementById('assemblyApp');app.hidden=false;app.inert=false;
-  document.body.classList.remove('auth-locked');AssemblyWorkspace.home();window.dispatchEvent(new Event('resize'));
+  document.body.classList.remove('auth-locked');window.dispatchEvent(new Event('resize'));
  })();return loading;}
  return {enter};
 })();
